@@ -1,23 +1,25 @@
 const Share = require('./db');
 
-const Add = (obj) => {
+//TODO Transform data
+
+const Add = async (obj) => {
     let share = new Share(obj);
-    share.save((err) => {
-        if(err)
-            console.log(err);
-    })
+    return await share.save();
 }
 
-const Update = (id, obj) => {
-    let share = Share.findByIdAndUpdate(id, obj, {new: true});
+const Update = async (id, obj) => {
+    let share = await Share.findOneAndUpdate({id: id}, obj, {new: true}).exec();
+    return share;
 }
 
-const Find = (id) => {
-    let share = Share.findOne({id: id});
+const Find = async (id) => {
+    let share = Share.findOne({id: id}).exec();
+    return share;
 }
 
-const Delete = (id) => {
-    let share = Share.findOneAndDelete({id:id});
+const Delete = async (id) => {
+    let share = await Share.findOneAndDelete({id:id}).exec();
+    return share;
 }
 
 module.exports = {

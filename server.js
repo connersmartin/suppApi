@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const repo = require('./repository');
 
 require('dotenv').config();
 
@@ -10,34 +11,36 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-  res.json("hello");
+  res.json("Documentation goes here");
 });
+
+//TODO verify input data and error handling
 
 //get /share/:id
 //will get a given share
-app.get('/share/:id', (req, res) => {
-  let msg = `You are trying to ${req.method} the id ${req.params.id}`
+app.get('/share/:id', async (req, res) => {
+  let msg = await repo.Find(req.params.id);
   res.json(msg);
 });
 
 //post /share/:id
 //will create a share
-app.post('/share/:id', (req, res) => {
-  let msg = `You are trying to ${req.method} the id ${req.params.id} with a body of ${JSON.stringify(req.body)}`
+app.post('/share', async (req, res) => {
+  let msg = await repo.Add(req.body);
   res.json(msg);
 });
 
 //put /share/:id
 //edit existing share
-app.put('/share/:id', (req, res) => {
-  let msg = `You are trying to ${req.method} the id ${req.params.id} with a body of ${JSON.stringify(req.body)}`
+app.put('/share/:id', async (req, res) => {
+  let msg = await repo.Update(req.params.id, req.body);
   res.json(msg);
 });
 
 //delete /share/:id
 //delete the share
-app.delete('/share/:id', (req, res) => {
-  let msg = `You are trying to ${req.method} the id ${req.params.id}`
+app.delete('/share/:id', async (req, res) => {
+  let msg = await repo.Delete(req.params.id);
   res.json(msg);
 });
 
