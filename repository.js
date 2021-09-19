@@ -13,7 +13,7 @@ const Update = async (id, obj) => {
 }
 
 const Find = async (id) => {
-    let share = Share.findOne({id: id}).exec();
+    let share = await Share.findOne({id: id}).exec();
     return share;
 }
 

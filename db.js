@@ -23,8 +23,8 @@ const shareSchema = new Schema({
         link: String,
         description: String
     }],
-    editable: Boolean,
-    description: String,
+    editable: { type: Boolean, default: true },
+    description: { type: String, default: 'n/a' },
     date: { type: Date, default: Date.now },
 });
 
