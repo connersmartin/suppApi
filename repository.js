@@ -18,6 +18,7 @@ const Find = async (id) => {
 }
 
 const Delete = async (id) => {
+    //may want to update this to not delete uneditable shares via api
     let share = await Share.findOneAndDelete({id:id}).exec();
     return share;
 }
