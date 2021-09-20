@@ -1,7 +1,5 @@
 const Share = require('./db');
 
-//TODO Transform data
-
 const Add = async (obj) => {
     let share = new Share(obj);
     return await share.save();
@@ -18,8 +16,7 @@ const Find = async (id) => {
 }
 
 const Delete = async (id) => {
-    //may want to update this to not delete uneditable shares via api
-    let share = await Share.findOneAndDelete({id:id}).exec();
+    let share = await Share.findOneAndDelete({id:id, editable:true}).exec();
     return share;
 }
 
