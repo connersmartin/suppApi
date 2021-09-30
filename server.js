@@ -5,14 +5,21 @@ const repo = require('./repository');
 
 require('dotenv').config();
 
-app.use(cors())
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
 
-const allow = process.env.ALLOW_DOMAIN;
-const corsOptions = {
-  origin: allow
-}
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', process.env.ALLOW_DOMAIN);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  // allow preflight
+  if (req.method === 'OPTIONS') {
+      res.send(200);
+  } else {
+      next();
+  }
+});
 
 
 app.get('/', (req, res) => {
@@ -37,7 +44,7 @@ app.post('/share', async (req, res) => {
 
 //put /share/:id
 //edit existing share
-app.put('/share/:id', cors(corsOptions), async (req, res) => {
+app.put('/share/:id', async (req, res) => {
   let msg = await repo.Update(req.params.id, req.body);
   res.json(msg);
 });
