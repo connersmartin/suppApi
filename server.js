@@ -9,6 +9,11 @@ app.use(cors())
 app.use(express.static('public'));
 app.use(express.json());
 
+const allow = process.env.ALLOW_DOMAIN;
+const corsOptions = {
+  origin: allow
+}
+
 
 app.get('/', (req, res) => {
   res.json("Documentation goes here");
@@ -32,7 +37,7 @@ app.post('/share', async (req, res) => {
 
 //put /share/:id
 //edit existing share
-app.put('/share/:id', async (req, res) => {
+app.put('/share/:id', cors(corsOptions), async (req, res) => {
   let msg = await repo.Update(req.params.id, req.body);
   res.json(msg);
 });
