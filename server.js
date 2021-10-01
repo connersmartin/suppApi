@@ -40,7 +40,6 @@ app.post('/share', async (req, res) => {
 //edit existing share
 app.put('/share/:id', async (req, res) => {
   let msg = await repo.Update(req.params.id, req.body);
-  res.header('Access-Control-Allow-Origin', process.env.ALLOW_DOMAIN);
   res.json(msg);
 });
 
