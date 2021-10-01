@@ -5,16 +5,11 @@ const repo = require('./repository');
 
 require('dotenv').config();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.ALLOW_DOMAIN
+}));
 app.use(express.static('public'));
 app.use(express.json());
-
-
-const allow = process.env.ALLOW_DOMAIN;
-const corsOptions = {
-  origin: allow
-}
-
 
 app.get('/', (req, res) => {
   res.json("Documentation goes here");
@@ -38,7 +33,7 @@ app.post('/share', async (req, res) => {
 
 //put /share/:id
 //edit existing share
-app.put('/share/:id', cors(corsOptions), async (req, res) => {
+app.put('/share/:id', async (req, res) => {
   let msg = await repo.Update(req.params.id, req.body);
   res.header('Access-Control-Allow-Origin', process.env.ALLOW_DOMAIN);
   res.json(msg);
