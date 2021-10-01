@@ -5,11 +5,15 @@ const repo = require('./repository');
 
 require('dotenv').config();
 
-app.use(cors({
-  origin: process.env.ALLOW_DOMAIN
-}));
+//app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.ALLOW_DOMAIN); 
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.get('/', (req, res) => {
   res.json("Documentation goes here");
