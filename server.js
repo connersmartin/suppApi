@@ -5,11 +5,14 @@ const repo = require('./repository');
 
 require('dotenv').config();
 
-app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
+app.use(cors({
+  origin: '*',
+  methods: ['GET','PUT','POST','DELETE','OPTIONS'],
+  allowedHeaders: ["Origin, X-Requested-With, Content-Type, Accept"]
 
-app.options('/share/:id', cors())
+}));
 
 app.get('/', (req, res) => {
   res.json("Documentation goes here");
