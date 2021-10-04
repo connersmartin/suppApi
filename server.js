@@ -5,16 +5,12 @@ const repo = require('./repository');
 
 require('dotenv').config();
 
-//app.use(cors());
+app.use(cors({
+  origin: process.env.ALLOW_DOMAIN,
+  methods: ['GET','POST','DELETE','PUT']
+}));
 app.use(express.static('public'));
 app.use(express.json());
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin","*"); 
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  next();
-});
 
 app.get('/', (req, res) => {
   res.json("Documentation goes here");
@@ -38,8 +34,9 @@ app.post('/share', async (req, res) => {
 
 //put /share/:id
 //edit existing share
-app.put('/share/:id', async (req, res) => {
+app.put('/share/:id', cors(), async (req, res) => {
   let msg = await repo.Update(req.params.id, req.body);
+  res.header()
   res.json(msg);
 });
 
