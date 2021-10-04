@@ -37,14 +37,14 @@ app.post('/share', async (req, res) => {
 //edit existing share
 app.put('/share/:id', async (req, res) => {
   let msg = await repo.Update(req.params.id, req.body);
-  res.statusCode(202);
+  res.json(msg);
 });
 
 //delete /share/:id
 //delete the share
 app.delete('/share/:id', async (req, res) => {
   let msg = await repo.Delete(req.params.id);
-  res.statusCode(202);
+  res.json(msg);
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
