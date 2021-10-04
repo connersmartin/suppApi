@@ -5,11 +5,7 @@ const repo = require('./repository');
 
 require('dotenv').config();
 
-app.use(cors({
-  origin: process.env.ALLOW_DOMAIN,
-  methods: ['GET','POST','DELETE','PUT','OPTIONS'],
-  allowedHeaders: 'content-type'
-}));
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
 
@@ -37,14 +33,14 @@ app.post('/share', async (req, res) => {
 
 //put /share/:id
 //edit existing share
-app.put('/share/:id', cors(), async (req, res) => {
+app.put('/share/:id', async (req, res) => {
   let msg = await repo.Update(req.params.id, req.body);
   res.json(msg);
 });
 
 //delete /share/:id
 //delete the share
-app.delete('/share/:id', cors(), async (req, res) => {
+app.delete('/share/:id', async (req, res) => {
   let msg = await repo.Delete(req.params.id);
   res.json(msg);
 });
