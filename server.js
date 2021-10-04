@@ -7,7 +7,8 @@ require('dotenv').config();
 
 app.use(cors({
   origin: process.env.ALLOW_DOMAIN,
-  methods: ['GET','POST','DELETE','PUT','OPTIONS']
+  methods: ['GET','POST','DELETE','PUT','OPTIONS'],
+  allowedHeaders: 'content-type'
 }));
 app.use(express.static('public'));
 app.use(express.json());
